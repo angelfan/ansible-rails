@@ -1,0 +1,9 @@
+---
+- name: git config --global url."https://".insteadOf git://
+  raw: git config --global url."https://".insteadOf git://
+
+- name: git config --global http.proxy http://{{ master_ip }}:3128/
+  raw: git config --global http.proxy http://{{ master_ip }}:3128/
+
+- name: git config --global https.proxy http://{{ master_ip }}:3128/
+  raw: git config --global https.proxy http://{{ master_ip }}:3128/

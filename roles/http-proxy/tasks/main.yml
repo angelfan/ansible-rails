@@ -1,0 +1,30 @@
+---
+- name: add proxy config
+  blockinfile:
+    path: /home/{{ deploy_user }}/.bashrc
+    block: |
+      export http_proxy=http://{{ master_ip }}:3128/
+      export https_proxy=$http_proxy
+      export ftp_proxy=$http_proxy
+      export dns_proxy=$http_proxy
+      export rsync_proxy=$http_proxy
+      export all_proxy=$http_proxy
+  notify: source bashrc
+
+- name: add proxy /etc/environment
+  blockinfile:
+    path: /etc/environment
+    block: |
+      export http_proxy=http://{{ master_ip }}:3128/
+      export https_proxy=$http_proxy
+      export ftp_proxy=$http_proxy
+      export dns_proxy=$http_proxy
+      export rsync_proxy=$http_proxy
+      export all_proxy=$http_proxy
+
+- name: add allowed /etc/hosts.allow
+  blockinfile:
+    path: /etc/hosts.allow
+    block: |
+      ALL: ALL
+      sshd: all

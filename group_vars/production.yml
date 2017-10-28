@@ -1,0 +1,35 @@
+# common
+deploy_server_hostname: app_production
+timezone: Asia/Shanghai
+locale: en_US.UTF-8
+
+# deploy-user
+deploy_user: deploy
+deploy_password: "password"
+ssh_public_key_files:
+  - ~/my.pub
+
+# nginx
+deploy_dir: /home/deploy/apps
+deploy_app_name: 'app'
+nginx_https_enabled: true
+nginx_host_name: 'www.example.com'
+cnd_host_name: 'cdn.example.com'
+upstream_server: unix:///home/deploy/apps/carrera/shared/tmp/sockets/puma.sock;
+
+
+# rbenv
+rbenv:
+  env: user
+  version: v1.0.0
+  default_ruby: 2.3.1
+  rubies:
+    - version: 2.3.1
+rbenv_users:
+  - deploy
+
+# rails application
+rails_env: 'production'
+
+region: Tokyo
+

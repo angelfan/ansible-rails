@@ -1,0 +1,9 @@
+---
+- name: add github deploy private key
+  template: src=github dest=/home/{{ deploy_user }}/.ssh
+
+- name: add github deploy public key
+  template: src=github.pub dest=/home/{{ deploy_user }}/.ssh
+
+- name: config for useing deploy key with github
+  template: src=config dest=/home/{{ deploy_user }}/.ssh

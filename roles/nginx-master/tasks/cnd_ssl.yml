@@ -1,0 +1,6 @@
+---
+- name: Copy cdn ssl crt
+  template: src=cdn_ssl/{{ rails_env }}.crt  dest=/etc/nginx/cdn_ssl/{{ cnd_host_name }}.crt owner=root group=root
+
+- name: Copy cdn ssl key
+  template: src=cdn_ssl/{{ rails_env }}.key  dest=/etc/nginx/cdn_ssl/{{ cnd_host_name }}.key owner=root group=root

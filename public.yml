@@ -1,0 +1,15 @@
+# Install python and aptitude on the target machines (apt-get install python aptitude)
+# Copy ssh public key to machines (ssh-copy-id user@host)
+---
+- name: Staging Server Setup
+#  hosts: demo
+#  remote_user: deploy
+#  become: yes
+#  become_method: sudo
+#  gather_facts: yes
+  pre_tasks:
+#    - name: apt-get update
+#      raw: apt-get update -qq
+  roles:
+#    - roles/deploy-user
+     - set your role

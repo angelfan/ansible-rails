@@ -1,0 +1,4 @@
+[production]
+139.224.238.161 hostname_suffix=production-01
+139.224.238.160 hostname_suffix=production-02
+

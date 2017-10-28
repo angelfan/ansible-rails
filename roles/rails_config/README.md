@@ -1,0 +1,3 @@
+## nginx
+
+config for rails

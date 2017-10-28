@@ -1,0 +1,3 @@
+MONIT_EVENT=Report MONIT_DESCRIPTION=`/usr/local/bin/slack_report` \
+MONIT_HOST=`hostname` MONIT_DATE=`date -R` MONIT_COLOR="#808080" \
+  /usr/local/bin/slack_monit

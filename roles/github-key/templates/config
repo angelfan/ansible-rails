@@ -1,0 +1,31 @@
+
+{% if master_server == 'true' %}
+  Host github.com
+  HostName github.com
+  User deploy
+  IdentityFile ~/.ssh/github
+
+
+  {% for slave_ip in slave_ips %}
+     Host slave_{{ slave_ips[slave_ip] }}
+     Hostname {{ slave_ip }}
+     User deploy
+     ForwardAgent yes
+     IdentityFile ~/.ssh/github
+  {% endfor %}
+
+{% else %}
+
+   Host github.com
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/github
+   ProxyCommand ssh master nc %h %p
+
+   Host master
+   Hostname {{ master_ip }}
+   User deploy
+   ForwardAgent yes
+   IdentityFile ~/.ssh/github
+
+{% endif %}

@@ -1,0 +1,17 @@
+# Install python and aptitude on the target machines (apt-get install python aptitude)
+# Copy ssh public key to machines (ssh-copy-id user@host)
+---
+- name: Rails Config For Production
+  hosts: production
+  remote_user: deploy
+  gather_facts: yes # don't gather facts when /usr/bin/python isn't set
+  roles:
+    - roles/rails_config
+    - role: roles/nginx
+      become: yes
+      become_method: sudo
+    - role: roles/nginx-master
+      become: yes
+      become_method: sudo
+      when: master_server == 'true'
+

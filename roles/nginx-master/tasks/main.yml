@@ -1,0 +1,25 @@
+---
+- name: Check for dhparam.pem
+  stat: path=/etc/nginx/ssl/dhparam.pem
+  register: dhparam
+
+- name: Generate /etc/nginx/ssl/ directory
+  file: path=/etc/nginx/ssl/ state=directory
+  when: dhparam.stat.exists == false
+
+- name: Generate dhparam
+  command: openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+  when: dhparam.stat.exists == false
+
+- name: Copy nginx configuration
+  template: src={{ rails_env }}.conf  dest=/etc/nginx/sites-enabled/{{ nginx_host_name }}-master.conf owner=root group=root
+  notify: restart nginx
+
+- name: Copy ssl crt
+  template: src=ssl/{{ rails_env }}.crt  dest=/etc/nginx/ssl/{{ nginx_host_name }}.crt owner=root group=root
+
+- name: Copy ssl key
+  template: src=ssl/{{ rails_env }}.key  dest=/etc/nginx/ssl/{{ nginx_host_name }}.key owner=root group=root
+
+- include: cnd_ssl.yml
+  when: rails_env == 'production'

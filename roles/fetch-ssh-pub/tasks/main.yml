@@ -1,0 +1,6 @@
+---
+- name: fetch ssh id_rsa.pub
+  fetch:
+    src: "{{ id_rsa_src }}"
+    dest: ../roles/fetch-ssh-pub/files/{{ rails_env }}_id_rsa.pub
+    flat: yes

@@ -1,0 +1,13 @@
+---
+- name: Create shared config directory
+  file: path={{ deploy_dir }}/{{ deploy_app_name }}/shared/config state=directory owner=deploy group=deploy
+
+- name: Copy database.yml
+  template: src=database-{{ rails_env }}.yml dest={{ deploy_dir }}/{{ deploy_app_name }}/shared/config/database.yml
+
+- name: Copy secrets.yml
+  template: src=secrets-{{ rails_env }}.yml dest={{ deploy_dir }}/{{ deploy_app_name }}/shared/config/secrets.yml
+
+- name: Bundle setting china when region is China
+  command: /home/deploy/.rbenv/shims/bundle config mirror.https://rubygems.org https://gems.ruby-china.org
+  when: region is defined and region == 'China'

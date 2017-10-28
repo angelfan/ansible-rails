@@ -1,0 +1,6 @@
+- name: Install Packages
+  apt: name={{ item }} state=latest update_cache=true
+  with_items:
+    - ttf-wqy-zenhei
+    - libmysqlclient-dev
+

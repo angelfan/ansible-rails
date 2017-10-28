@@ -1,0 +1,19 @@
+# Install python and aptitude on the target machines (apt-get install python aptitude)
+# Copy ssh public key to machines (ssh-copy-id user@host)
+---
+- name: Install Production Rails Server
+  hosts: production
+  remote_user: deploy
+  become: yes
+  become_method: sudo
+  gather_facts: yes # don't gather facts when /usr/bin/python isn't set
+  pre_tasks:
+    - name: sudo apt-get update
+      raw: sudo apt-get update -qq
+  roles:
+    - roles/packages
+    - roles/nginx
+    - roles/logrotate
+    - roles/monit
+    - roles/zzet.rbenv
+

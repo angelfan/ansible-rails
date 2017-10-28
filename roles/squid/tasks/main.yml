@@ -1,0 +1,17 @@
+---
+- name: Install Squid
+  apt: name=squid state=latest
+
+- replace:
+    path: /etc/squid/squid.conf
+    regexp: '^#acl localnet src 192.168.0.0/16'
+    replace: 'acl localnet src 192.168.0.0/16'
+    backup: yes
+    notify: restart squid
+
+- replace:
+    path: /etc/squid/squid.conf
+    regexp: '^#http_access allow localnet'
+    replace: 'http_access allow localnet'
+    backup: yes
+    notify: restart squid

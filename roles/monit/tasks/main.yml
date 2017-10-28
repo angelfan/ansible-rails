@@ -1,0 +1,52 @@
+---
+- name: Install monit
+  apt: name={{ item }} state=latest update_cache=true
+  with_items:
+    - monit
+
+- name: Copy slack-url to /etc/monit/slack-url
+  template: src=slack-url dest=/etc/monit/slack-url
+
+- name: Copy slack_monit.sh to /usr/local/bin
+  template: src=slack_monit.sh dest=/usr/local/bin/slack_monit mode=0755
+
+- name: Copy diskspace.conf
+  template: src=diskspace.conf dest=/etc/monit/conf.d/diskspace.conf
+  notify: "restart monit"
+
+
+- name: Copy site_monit.conf
+  template: src=site_monit.conf dest=/etc/monit/conf.d/site_monit.conf
+  notify: "restart monit"
+
+- name: Copy system.conf
+  template: src=system.conf dest=/etc/monit/conf.d/system.conf
+  notify: "restart monit"
+
+- name: Copy slack_report.sh to /usr/local/bin/slack_report
+  template: src=slack_report.sh dest=/usr/local/bin/slack_report mode=0755
+
+- name: Copy slack_report.cron to /etc/cron.weekly/slack-report
+  template: src=slack_report.cron dest=/etc/cron.weekly/slack-report mode=0755
+
+# enabled monit http interface
+- replace:
+    path: /etc/monit/monitrc
+    regexp: '^# set httpd port 2812 and'
+    replace: ' set httpd port 2812 and'
+    backup: yes
+- replace:
+    path: /etc/monit/monitrc
+    regexp: '^#     use address localhost'
+    replace: '     use address localhost'
+    backup: yes
+- replace:
+    path: /etc/monit/monitrc
+    regexp: '^#     allow localhost'
+    replace: '     allow localhost'
+    backup: yes
+- replace:
+    path: /etc/monit/monitrc
+    regexp: '^#     allow admin:monit'
+    replace: '     allow admin:monit'
+    backup: yes
